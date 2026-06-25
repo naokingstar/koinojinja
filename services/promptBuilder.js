@@ -57,18 +57,74 @@ function buildImagePrompt(input, diagnosis){
   const app = diagnosis.appearance || {};
   const visualAge = getVisualAgeRange(input.age);
 
-  const styleHints = [
-    "ordinary everyday appearance",
-    "natural casual style",
-    "realistic street-style look",
-    "friendly and approachable atmosphere",
-    "simple natural hairstyle",
-    "average facial features",
-    "not too glamorous",
-    "not too perfect"
+  const hairOptions = targetGender === "woman" ? [
+    "short bob hair",
+    "medium length natural hair",
+    "long straight dark hair",
+    "shoulder length brown hair",
+    "casual ponytail",
+    "soft wavy hair",
+    "simple short haircut",
+    "natural bob hairstyle"
+  ] : [
+    "short black hair",
+    "medium natural haircut",
+    "clean short hairstyle",
+    "slightly wavy short hair",
+    "neat casual haircut",
+    "soft medium hairstyle",
+    "simple natural haircut",
+    "short hairstyle with glasses"
   ];
 
-  const pickedStyle = styleHints[Math.floor(Math.random() * styleHints.length)];
+  const fashionOptions = targetGender === "woman" ? [
+    "casual knit top",
+    "simple blouse",
+    "office casual clothes",
+    "plain hoodie",
+    "casual cardigan",
+    "simple university student style",
+    "natural everyday fashion",
+    "modest casual outfit"
+  ] : [
+    "plain shirt",
+    "casual hoodie",
+    "simple jacket",
+    "office casual shirt",
+    "knit sweater",
+    "casual T-shirt",
+    "modest everyday outfit",
+    "simple clean style"
+  ];
+
+  const vibeOptions = [
+    "friendly and approachable",
+    "calm and gentle",
+    "quiet and thoughtful",
+    "cheerful but natural",
+    "slightly shy smile",
+    "warm and sincere",
+    "ordinary and realistic",
+    "relaxed everyday atmosphere"
+  ];
+
+  const faceOptions = [
+    "round face",
+    "oval face",
+    "slightly sharp facial features",
+    "soft facial features",
+    "average facial features",
+    "gentle eyes",
+    "natural smile",
+    "neutral expression"
+  ];
+
+  const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
+  const generatedHair = app.hair && app.hair !== "natural hairstyle" ? app.hair : pick(hairOptions);
+  const generatedFashion = app.fashion && app.fashion !== "casual everyday clothes" ? app.fashion : pick(fashionOptions);
+  const generatedVibe = app.vibe && app.vibe !== "natural and friendly" ? app.vibe : pick(vibeOptions);
+  const generatedFace = pick(faceOptions);
 
   return `
 Create a realistic smartphone portrait photo.
@@ -76,11 +132,12 @@ Create a realistic smartphone portrait photo.
 Subject:
 Japanese ${targetGender}
 Age appearance: ${visualAge}
-Hair: ${app.hair || "natural hairstyle"}
-Fashion: ${app.fashion || "casual everyday clothes"}
-Vibe: ${app.vibe || "natural and friendly"}
+Hair: ${generatedHair}
+Fashion: ${generatedFashion}
+Vibe: ${generatedVibe}
+Face: ${generatedFace}
 Body type: ${app.bodyType || "average body type"}
-Style: ${app.style || pickedStyle}
+Style: ${app.style || "ordinary everyday person"}
 
 Important rules:
 - The person must visually match the age range.
