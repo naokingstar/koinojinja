@@ -4,57 +4,95 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>恋の神社 | AI恋愛診断</title>
+<meta name="description" content="恋の神社は、ニックネーム・年齢・MBTI・理想のタイプから、あなたに合う恋愛タイプを診断する無料AI恋愛診断サービスです。">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header>
-  <h1>⛩ 恋の神社</h1>
-  <p>AIが診断する、あなたにぴったりのお相手。</p>
+<header class="hero">
+  <div class="hero-inner">
+    <p class="small-title">ご縁を結ぶ</p>
+    <h1>恋の神社</h1>
+    <p class="lead">AI恋愛診断</p>
+    <p class="sub">あなたの恋愛タイプを診断して、ぴったりのお相手像をお伝えします。</p>
+    <a href="#diagnosis" class="hero-btn">無料で診断する</a>
+  </div>
 </header>
 
-<main>
+<main class="layout">
+<section id="diagnosis" class="card main-card">
+  <h2>恋愛診断</h2>
 
-<section class="card">
-<h2>恋愛診断</h2>
+  <div class="form-grid">
+    <div>
+      <label>ニックネーム</label>
+      <input id="nickname" placeholder="例：しょう">
+    </div>
 
-<input id="nickname" placeholder="ニックネーム">
+    <div>
+      <label>年齢</label>
+      <input id="age" type="number" placeholder="例：23">
+    </div>
 
-<input id="age" type="number" placeholder="年齢">
+    <div>
+      <label>性別</label>
+      <select id="gender">
+        <option>男性</option>
+        <option>女性</option>
+        <option>その他</option>
+      </select>
+    </div>
 
-<select id="gender">
-<option>男性</option>
-<option>女性</option>
-</select>
+    <div>
+      <label>MBTI（任意）</label>
+      <input id="mbti" placeholder="例：INTJ">
+    </div>
+  </div>
 
-<input id="mbti" placeholder="MBTI（例: ENFP）">
+  <label>理想のタイプ（任意）</label>
+  <textarea id="type" placeholder="例：清楚、優しい、落ち着いている"></textarea>
 
-<textarea id="type" placeholder="理想のタイプ"></textarea>
-
-<button onclick="diagnose()">診断する</button>
+  <button onclick="diagnose()">診断する</button>
+  <p class="note">診断結果は参考情報です。恋愛や人間関係の結果を保証するものではありません。</p>
 </section>
 
-<section id="result" class="card" style="display:none;">
-<h2>診断結果</h2>
+<aside>
+  <section class="card side-card">
+    <h2>恋の神社とは</h2>
+    <p>恋の神社は、恋愛傾向や性格タイプをもとに、あなたに合うお相手像を診断する無料サービスです。</p>
+  </section>
 
-<p id="resultAge"></p>
-<p id="resultMbti"></p>
-<p id="resultPersonality"></p>
-<p id="resultAdvice"></p>
+  <section class="card side-card">
+    <h2>広告について</h2>
+    <p>恋の神社は、無料でご利用いただけるサービスを目指しています。今後、広告収益により運営費をまかなう予定です。</p>
+  </section>
+</aside>
 
+<section id="result" class="card result-card" style="display:none;">
+  <h2>診断結果</h2>
+  <p class="result-title">あなたに合うお相手像</p>
+
+  <div class="result-grid">
+    <div class="result-box"><span>おすすめ年齢</span><strong id="resultAge"></strong></div>
+    <div class="result-box"><span>おすすめMBTI</span><strong id="resultMbti"></strong></div>
+    <div class="result-box"><span>性格</span><strong id="resultPersonality"></strong></div>
+  </div>
+
+  <div class="advice">
+    <h3>恋愛アドバイス</h3>
+    <p id="resultAdvice"></p>
+  </div>
 </section>
-
 </main>
 
 <footer>
-<a href="terms.html">利用規約</a> |
-<a href="privacy.html">プライバシーポリシー</a> |
-<a href="tokushoho.html">特定商取引法</a> |
-<a href="contact.html">お問い合わせ</a> |
-<a href="faq.html">FAQ</a>
+  <a href="terms.html">利用規約</a>
+  <a href="privacy.html">プライバシーポリシー</a>
+  <a href="tokushoho.html">特定商取引法</a>
+  <a href="contact.html">お問い合わせ</a>
+  <a href="faq.html">FAQ</a>
 </footer>
 
 <script src="script.js"></script>
-
 </body>
 </html>

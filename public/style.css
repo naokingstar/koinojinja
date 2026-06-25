@@ -1,56 +1,220 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
 body{
-    font-family: sans-serif;
-    background:#f5f5f5;
-    margin:0;
-    padding:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;
+  background:#fff8fb;
+  color:#333;
 }
 
-header{
-    background:#c62828;
-    color:white;
-    text-align:center;
-    padding:40px 20px;
+.hero{
+  min-height:620px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  background:
+    linear-gradient(rgba(255,190,215,.55),rgba(255,170,205,.55)),
+    url("https://images.unsplash.com/photo-1522383225653-ed111181a951?auto=format&fit=crop&w=1600&q=80");
+  background-size:cover;
+  background-position:center;
 }
 
-main{
-    max-width:800px;
-    margin:auto;
-    padding:20px;
+.hero-inner{
+  background:rgba(255,255,255,.78);
+  backdrop-filter:blur(10px);
+  padding:52px;
+  border-radius:28px;
+  max-width:760px;
+  box-shadow:0 20px 60px rgba(180,40,90,.18);
+}
+
+.small-title{
+  color:#d81b60;
+  letter-spacing:.4em;
+  font-weight:bold;
+  margin-bottom:10px;
+}
+
+.hero h1{
+  font-size:70px;
+  color:#c2185b;
+  margin-bottom:20px;
+}
+
+.lead{
+  font-size:30px;
+  font-weight:bold;
+  color:#ad1457;
+  margin-bottom:15px;
+}
+
+.sub{
+  line-height:2;
+  color:#444;
+}
+
+.hero-btn{
+  display:inline-block;
+  margin-top:30px;
+  padding:18px 50px;
+  border-radius:999px;
+  background:linear-gradient(135deg,#ff4f8b,#d81b60);
+  color:white;
+  text-decoration:none;
+  font-size:20px;
+  font-weight:bold;
+}
+
+.layout{
+  max-width:1200px;
+  margin:-80px auto 50px;
+  padding:20px;
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:25px;
+  position:relative;
+  z-index:2;
 }
 
 .card{
-    background:white;
-    padding:20px;
-    margin-bottom:20px;
-    border-radius:12px;
-    box-shadow:0 2px 10px rgba(0,0,0,.1);
+  background:white;
+  border-radius:24px;
+  padding:30px;
+  box-shadow:0 10px 35px rgba(0,0,0,.08);
+  border:1px solid #f7d3df;
 }
 
-input,
-select,
+.main-card{
+  grid-row:span 2;
+}
+
+.card h2{
+  color:#d81b60;
+  margin-bottom:20px;
+}
+
+.form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+
+label{
+  display:block;
+  margin-top:15px;
+  font-weight:bold;
+  color:#d81b60;
+}
+
+input,select,textarea{
+  width:100%;
+  padding:15px;
+  margin-top:8px;
+  border-radius:12px;
+  border:1px solid #f2c0d5;
+  font-size:16px;
+}
+
 textarea{
-    width:100%;
-    padding:12px;
-    margin-top:10px;
-    margin-bottom:10px;
-    box-sizing:border-box;
+  height:120px;
 }
 
 button{
-    background:#c62828;
-    color:white;
-    border:none;
-    padding:12px 20px;
-    border-radius:8px;
-    cursor:pointer;
+  width:100%;
+  margin-top:25px;
+  padding:18px;
+  border:none;
+  border-radius:999px;
+  background:linear-gradient(135deg,#ff4f8b,#d81b60);
+  color:white;
+  font-size:20px;
+  font-weight:bold;
+  cursor:pointer;
 }
 
-button:hover{
-    opacity:.9;
+.result-card{
+  grid-column:1/-1;
+}
+
+.result-title{
+  text-align:center;
+  font-size:24px;
+  font-weight:bold;
+  color:#c2185b;
+  margin-bottom:25px;
+}
+
+.result-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+
+.result-box{
+  background:#fff2f7;
+  padding:20px;
+  border-radius:18px;
+  text-align:center;
+}
+
+.result-box span{
+  display:block;
+  color:#999;
+  font-size:13px;
+}
+
+.result-box strong{
+  display:block;
+  margin-top:10px;
+  font-size:25px;
+  color:#d81b60;
+}
+
+.advice{
+  margin-top:25px;
+  background:#fff8fb;
+  padding:25px;
+  border-radius:18px;
+  line-height:2;
+}
+
+.note{
+  margin-top:15px;
+  font-size:13px;
+  color:#777;
+  text-align:center;
 }
 
 footer{
-    text-align:center;
-    padding:30px;
-    background:white;
+  background:white;
+  text-align:center;
+  padding:35px;
+}
+
+footer a{
+  color:#d81b60;
+  text-decoration:none;
+  margin:0 12px;
+}
+
+@media(max-width:900px){
+  .layout{
+    grid-template-columns:1fr;
+  }
+
+  .form-grid{
+    grid-template-columns:1fr;
+  }
+
+  .hero h1{
+    font-size:48px;
+  }
+
+  .result-grid{
+    grid-template-columns:1fr;
+  }
 }
