@@ -45,7 +45,11 @@ MBTI: ${mbti || "未入力"}
  "datePlan": "落ち着いたカフェで会話を楽しむ",
  "confessionScore": "78%",
  "marriageScore": "★★★★☆",
- "advice": "120文字以内の恋愛アドバイス",
+ "matchPercent": "86%",
+ "profileJob": "保育士",
+ "hobby": "カフェ巡り・映画鑑賞",
+ "holiday": "友人と出かけたり、落ち着いた場所で過ごす",
+ "advice": "200文字以内の恋愛アドバイス",
  "appearance": {
    "ageRange": "18〜22歳",
    "hair": "short bob",

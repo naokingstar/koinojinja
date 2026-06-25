@@ -44,7 +44,16 @@ async function diagnose(){
     setText("resultMarriage", data.marriageScore);
     setText("resultPlace", data.place);
     setText("resultDate", data.datePlan);
+    setText("resultProfileJob", data.profileJob || data.job || "");
+    setText("resultHobby", data.hobby || "カフェ巡り・映画鑑賞");
+    setText("resultHoliday", data.holiday || "落ち着いた場所でゆっくり過ごす");
     setText("resultAdvice", data.advice);
+
+    const percent = data.matchPercent || data.confessionScore || "82%";
+    setText("resultMatchPercent", percent);
+    const num = parseInt(percent.replace("%","")) || 82;
+    const bar = document.getElementById("matchBar");
+    if(bar){ bar.style.width = Math.min(num,100) + "%"; }
 
     if(aiImage && data.image){
       aiImage.innerHTML = '<img src="' + data.image + '" alt="AIが生成したお相手のイメージ">';
