@@ -80,15 +80,23 @@ not overly attractive, no beauty filter, indoor daylight,
 safe non-sexual profile photo, adult appearance only.
 `;
 
-    const image = await client.images.generate({
-      model: "gpt-image-1",
-      prompt: imagePrompt,
-      size: "1024x1024"
-    });
+    let imageData = "";
+
+    try {
+      const image = await client.images.generate({
+        model: "gpt-image-1",
+        prompt: imagePrompt,
+        size: "1024x1024"
+      });
+
+      imageData = "data:image/png;base64," + image.data[0].b64_json;
+    } catch (imageError) {
+      console.error("IMAGE_GENERATION_ERROR:", imageError);
+    }
 
     res.json({
       ...diagnosis,
-      image: "data:image/png;base64," + image.data[0].b64_json
+      image: imageData
     });
 
   } catch (e) {
