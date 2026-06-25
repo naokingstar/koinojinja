@@ -267,3 +267,62 @@ footer a{
   color:#c2185b;
   font-weight:bold;
 }
+
+
+/* V7 AI画像表示調整 */
+.image-card{
+  margin-top:28px;
+  background:#fff8fb;
+  padding:28px;
+  border-radius:22px;
+  text-align:center;
+  border:1px solid #f7d3df;
+}
+
+.image-card h3{
+  color:#d81b60;
+  margin-bottom:18px;
+}
+
+.ai-image{
+  width:320px;
+  height:320px;
+  max-width:100%;
+  margin:18px auto;
+  border-radius:28px;
+  overflow:hidden;
+  background:#fff0f6;
+  box-shadow:0 14px 34px rgba(216,27,96,.22);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.ai-image img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.result-card{
+  max-width:900px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.result-grid{
+  margin-top:20px;
+}
+
+.advice{
+  white-space:pre-line;
+}
+
+@media(max-width:600px){
+  .ai-image{
+    width:260px;
+    height:260px;
+    border-radius:22px;
+  }
+}
