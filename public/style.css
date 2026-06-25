@@ -499,3 +499,29 @@ footer a{
   border-radius:999px;
   transition:width 1s ease;
 }
+
+
+/* V15正式版 */
+.v15-section{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:20px;
+  margin-top:26px;
+}
+
+.v15-section .profile-card{
+  margin-top:0;
+  background:linear-gradient(180deg,#fff8fb,#ffffff);
+  border:1px solid #f7d3df;
+  box-shadow:0 8px 24px rgba(216,27,96,.08);
+}
+
+.v15-section .profile-card h3{
+  font-size:18px;
+  border-left:5px solid #d81b60;
+  padding-left:10px;
+}
+
+.v15-section .profile-card p{
+  white-space:pre-line;
+}

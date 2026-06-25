@@ -47,6 +47,15 @@ async function diagnose(){
     setText("resultProfileJob", data.profileJob || data.job || "");
     setText("resultHobby", data.hobby || "カフェ巡り・映画鑑賞");
     setText("resultHoliday", data.holiday || "落ち着いた場所でゆっくり過ごす");
+    setText("resultFirstImpression", data.firstImpression);
+    setText("resultLoveFortune", data.loveFortune);
+    setText("resultLuckyColor", data.luckyColor);
+    setText("resultLuckyItem", data.luckyItem);
+    setText("resultMorningDate", data.morningDate);
+    setText("resultAfternoonDate", data.afternoonDate);
+    setText("resultNightDate", data.nightDate);
+    setText("resultStory", data.story);
+    setText("resultOneYearLater", data.oneYearLater);
     setText("resultAdvice", data.advice);
 
     const percent = data.matchPercent || data.confessionScore || "82%";

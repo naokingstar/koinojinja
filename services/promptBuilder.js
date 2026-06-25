@@ -38,6 +38,15 @@ MBTI: ${input.mbti || "未入力"}
  "profileJob": "会社員",
  "hobby": "映画鑑賞・カフェ巡り",
  "holiday": "落ち着いた場所でゆっくり過ごす",
+ "firstImpression": "相手から見たあなたの第一印象を100文字以内で",
+ "loveFortune": "大吉",
+ "luckyColor": "桜色",
+ "luckyItem": "白いハンカチ",
+ "morningDate": "午前中のデート案",
+ "afternoonDate": "午後のデート案",
+ "nightDate": "夜のデート案",
+ "story": "この人と初めて出会う日の短い恋愛ストーリーを180文字以内で",
+ "oneYearLater": "付き合って1年後の二人の雰囲気を120文字以内で",
  "advice": "200文字以内の恋愛アドバイス",
  "appearance": {
    "ageRange": "23〜26歳",
@@ -51,80 +60,10 @@ MBTI: ${input.mbti || "未入力"}
 `;
 }
 
-
 function buildImagePrompt(input, diagnosis){
   const targetGender = input.gender === "男性" ? "woman" : input.gender === "女性" ? "man" : "person";
   const app = diagnosis.appearance || {};
   const visualAge = getVisualAgeRange(input.age);
-
-  const hairOptions = targetGender === "woman" ? [
-    "short bob hair",
-    "medium length natural hair",
-    "long straight dark hair",
-    "shoulder length brown hair",
-    "casual ponytail",
-    "soft wavy hair",
-    "simple short haircut",
-    "natural bob hairstyle"
-  ] : [
-    "short black hair",
-    "medium natural haircut",
-    "clean short hairstyle",
-    "slightly wavy short hair",
-    "neat casual haircut",
-    "soft medium hairstyle",
-    "simple natural haircut",
-    "short hairstyle with glasses"
-  ];
-
-  const fashionOptions = targetGender === "woman" ? [
-    "casual knit top",
-    "simple blouse",
-    "office casual clothes",
-    "plain hoodie",
-    "casual cardigan",
-    "simple university student style",
-    "natural everyday fashion",
-    "modest casual outfit"
-  ] : [
-    "plain shirt",
-    "casual hoodie",
-    "simple jacket",
-    "office casual shirt",
-    "knit sweater",
-    "casual T-shirt",
-    "modest everyday outfit",
-    "simple clean style"
-  ];
-
-  const vibeOptions = [
-    "friendly and approachable",
-    "calm and gentle",
-    "quiet and thoughtful",
-    "cheerful but natural",
-    "slightly shy smile",
-    "warm and sincere",
-    "ordinary and realistic",
-    "relaxed everyday atmosphere"
-  ];
-
-  const faceOptions = [
-    "round face",
-    "oval face",
-    "slightly sharp facial features",
-    "soft facial features",
-    "average facial features",
-    "gentle eyes",
-    "natural smile",
-    "neutral expression"
-  ];
-
-  const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
-
-  const generatedHair = app.hair && app.hair !== "natural hairstyle" ? app.hair : pick(hairOptions);
-  const generatedFashion = app.fashion && app.fashion !== "casual everyday clothes" ? app.fashion : pick(fashionOptions);
-  const generatedVibe = app.vibe && app.vibe !== "natural and friendly" ? app.vibe : pick(vibeOptions);
-  const generatedFace = pick(faceOptions);
 
   return `
 Create a realistic smartphone portrait photo.
@@ -132,10 +71,9 @@ Create a realistic smartphone portrait photo.
 Subject:
 Japanese ${targetGender}
 Age appearance: ${visualAge}
-Hair: ${generatedHair}
-Fashion: ${generatedFashion}
-Vibe: ${generatedVibe}
-Face: ${generatedFace}
+Hair: ${app.hair || "natural hairstyle"}
+Fashion: ${app.fashion || "casual everyday clothes"}
+Vibe: ${app.vibe || "natural and friendly"}
 Body type: ${app.bodyType || "average body type"}
 Style: ${app.style || "ordinary everyday person"}
 
