@@ -70,6 +70,8 @@ async function diagnose(){
       aiImage.innerHTML = '<div class="image-loading">画像生成に失敗しました。診断結果のみ表示しています。</div>';
     }
 
+    latestDiagnosis = data;
+    saveDiagnosisHistory(data);
     result.scrollIntoView({ behavior: "smooth" });
 
   }catch(e){
@@ -79,4 +81,60 @@ async function diagnose(){
     button.disabled = false;
     button.innerText = "診断する";
   }
+}
+
+
+let latestDiagnosis = null;
+
+function saveDiagnosisHistory(data){
+  const history = JSON.parse(localStorage.getItem("koi_history") || "[]");
+  history.unshift({
+    date: new Date().toLocaleString("ja-JP"),
+    age: data.recommendedAge,
+    mbti: data.recommendedMbti,
+    personality: data.personality,
+    match: data.matchPercent || data.confessionScore || "",
+    image: data.image || ""
+  });
+  localStorage.setItem("koi_history", JSON.stringify(history.slice(0, 10)));
+}
+
+function saveFavorite(){
+  if(!latestDiagnosis){
+    alert("先に診断してください");
+    return;
+  }
+
+  const favorites = JSON.parse(localStorage.getItem("koi_favorites") || "[]");
+  favorites.unshift(latestDiagnosis);
+  localStorage.setItem("koi_favorites", JSON.stringify(favorites.slice(0, 20)));
+  alert("お気に入りに保存しました");
+}
+
+function showHistory(){
+  const area = document.getElementById("historyArea");
+  const history = JSON.parse(localStorage.getItem("koi_history") || "[]");
+
+  if(!area) return;
+
+  if(history.length === 0){
+    area.innerHTML = "<p>まだ診断履歴がありません。</p>";
+    area.style.display = "block";
+    return;
+  }
+
+  area.innerHTML = "<h3>診断履歴</h3>" + history.map(item => `
+    <div class="history-item">
+      ${item.image ? `<img src="${item.image}" alt="診断画像">` : ""}
+      <div>
+        <p><strong>${item.date}</strong></p>
+        <p>年齢：${item.age}</p>
+        <p>MBTI：${item.mbti}</p>
+        <p>性格：${item.personality}</p>
+        <p>相性：${item.match}</p>
+      </div>
+    </div>
+  `).join("");
+
+  area.style.display = "block";
 }

@@ -525,3 +525,51 @@ footer a{
 .v15-section .profile-card p{
   white-space:pre-line;
 }
+
+
+/* Release 1.1 history and favorite */
+.action-buttons{
+  display:flex;
+  gap:14px;
+  margin-top:24px;
+  flex-wrap:wrap;
+}
+
+.action-buttons button{
+  flex:1;
+  min-width:180px;
+  font-size:16px;
+}
+
+.history-area{
+  margin-top:24px;
+  background:#fff8fb;
+  border:1px solid #f7d3df;
+  border-radius:20px;
+  padding:22px;
+}
+
+.history-item{
+  display:flex;
+  gap:14px;
+  align-items:center;
+  padding:14px 0;
+  border-bottom:1px solid #f3d5df;
+}
+
+.history-item:last-child{
+  border-bottom:none;
+}
+
+.history-item img{
+  width:80px;
+  height:80px;
+  border-radius:14px;
+  object-fit:cover;
+}
+
+@media(max-width:600px){
+  .history-item{
+    align-items:flex-start;
+  }
+}
