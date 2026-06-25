@@ -138,3 +138,41 @@ function showHistory(){
 
   area.style.display = "block";
 }
+
+
+function loadDailyOmikuji(){
+  const fortunes = ["大吉", "中吉", "小吉", "吉", "末吉"];
+  const colors = ["桜色", "白", "淡いピンク", "水色", "クリーム色"];
+  const items = ["ハンカチ", "スマホケース", "白い靴", "小さなノート", "香水"];
+
+  const today = new Date().toLocaleDateString("ja-JP");
+  const seed = today.split("").reduce((a,c)=>a+c.charCodeAt(0),0);
+
+  const fortune = fortunes[seed % fortunes.length];
+  const color = colors[seed % colors.length];
+  const item = items[seed % items.length];
+
+  const f = document.getElementById("dailyFortune");
+  const l = document.getElementById("dailyLucky");
+
+  if(f) f.innerText = "本日の恋愛運：" + fortune;
+  if(l) l.innerText = "ラッキーカラー：" + color + " / ラッキーアイテム：" + item;
+}
+
+function shareResult(){
+  const text = "恋の神社でAI恋愛診断をしました。";
+  const url = location.href;
+
+  if(navigator.share){
+    navigator.share({
+      title: "恋の神社 | AI恋愛診断",
+      text,
+      url
+    });
+  }else{
+    navigator.clipboard.writeText(text + "\n" + url);
+    alert("診断ページのURLをコピーしました");
+  }
+}
+
+document.addEventListener("DOMContentLoaded", loadDailyOmikuji);

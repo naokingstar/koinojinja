@@ -573,3 +573,32 @@ footer a{
     align-items:flex-start;
   }
 }
+
+
+/* Release 1.2 daily omikuji and share */
+.daily-card{
+  grid-column:1 / -1;
+  background:linear-gradient(135deg,#fff7fb,#ffffff);
+  border:1px solid #f7d3df;
+  text-align:center;
+}
+
+.daily-card h2{
+  color:#d81b60;
+}
+
+#dailyFortune{
+  font-size:28px;
+  font-weight:bold;
+  color:#d81b60;
+  margin:12px 0;
+}
+
+#dailyLucky{
+  color:#7b4052;
+  font-weight:bold;
+}
+
+.action-buttons button{
+  background:linear-gradient(135deg,#ff77a8,#d81b60);
+}
