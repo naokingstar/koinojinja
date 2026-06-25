@@ -66,19 +66,29 @@ MBTI: ${mbti || "未入力"}
     const diagnosis = JSON.parse(cleanJson(textResult.choices[0].message.content));
 
     const app = diagnosis.appearance || {};
-    const safeAgeRange = userAge < 18 ? "18 to 22 years old adult" : (app.ageRange || diagnosis.recommendedAge || "young adult");
+
+    let visualAge = "young adult, 20s";
+    if (userAge >= 18 && userAge <= 22) visualAge = "18 to 22 years old adult, university student or new worker style";
+    if (userAge >= 23 && userAge <= 29) visualAge = "mid to late 20s, young working adult";
+    if (userAge >= 30 && userAge <= 39) visualAge = "30s, mature adult";
+    if (userAge >= 40) visualAge = "40s adult, calm mature appearance";
+    if (userAge < 18) visualAge = "18 to 22 years old adult, young adult appearance";
 
     const imagePrompt = `
-Realistic Japanese ${targetGender}, ${safeAgeRange},
-${app.hair || "natural hairstyle"},
-${app.fashion || "casual clothes"},
-${app.vibe || "ordinary everyday atmosphere"},
-${app.bodyType || "average body type"},
-natural face, realistic skin texture, smartphone portrait,
-ordinary everyday person, not celebrity, not idol, not fashion model,
-not overly attractive, no beauty filter, indoor daylight,
-safe non-sexual profile photo, adult appearance only.
+Realistic Japanese ${targetGender}.
+Age appearance: ${visualAge}.
+Hair: ${app.hair || "natural hairstyle"}.
+Fashion: ${app.fashion || "casual everyday clothes"}.
+Vibe: ${app.vibe || "ordinary, natural, friendly"}.
+Body type: ${app.bodyType || "average body type"}.
+Style: ${app.style || "ordinary everyday person"}.
+Create a natural smartphone portrait photo.
+Realistic skin texture, natural face, casual indoor daylight.
+Not celebrity, not idol, not fashion model, not overly attractive.
+No beauty filter, no glamour lighting.
+Safe non-sexual profile photo, adult appearance only.
 `;
+    console.log("IMAGE_PROMPT:", imagePrompt);
 
     let imageData = "";
 
