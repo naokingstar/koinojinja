@@ -356,3 +356,33 @@ footer a{
     height:260px !important;
   }
 }
+
+
+/* 強制：AI生成画像をカードサイズに固定 */
+#aiImage{
+  width:320px !important;
+  height:320px !important;
+  max-width:90vw !important;
+  margin:20px auto !important;
+  border-radius:26px !important;
+  overflow:hidden !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  background:#fff0f6 !important;
+  box-shadow:0 14px 34px rgba(216,27,96,.22) !important;
+}
+
+#aiImage img{
+  width:100% !important;
+  height:100% !important;
+  object-fit:cover !important;
+  display:block !important;
+}
+
+@media(max-width:600px){
+  #aiImage{
+    width:260px !important;
+    height:260px !important;
+  }
+}
