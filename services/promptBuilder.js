@@ -51,28 +51,48 @@ MBTI: ${input.mbti || "未入力"}
 `;
 }
 
+
 function buildImagePrompt(input, diagnosis){
   const targetGender = input.gender === "男性" ? "woman" : input.gender === "女性" ? "man" : "person";
   const app = diagnosis.appearance || {};
   const visualAge = getVisualAgeRange(input.age);
 
+  const styleHints = [
+    "ordinary everyday appearance",
+    "natural casual style",
+    "realistic street-style look",
+    "friendly and approachable atmosphere",
+    "simple natural hairstyle",
+    "average facial features",
+    "not too glamorous",
+    "not too perfect"
+  ];
+
+  const pickedStyle = styleHints[Math.floor(Math.random() * styleHints.length)];
+
   return `
-Realistic Japanese ${targetGender}.
-Age appearance: ${visualAge}.
-The face must visually match this age range.
-Hair: ${app.hair || "natural hairstyle"}.
-Fashion: ${app.fashion || "casual everyday clothes"}.
-Vibe: ${app.vibe || "ordinary, natural, friendly"}.
-Body type: ${app.bodyType || "average body type"}.
-Style: ${app.style || "ordinary everyday person"}.
-Create a natural smartphone portrait photo.
-Realistic skin texture, natural face, casual indoor daylight.
-Make the person look like an ordinary everyday Japanese person.
-Avoid celebrity, idol, influencer, fashion model, anime, doll-like face, or overly perfect beauty.
-Avoid heavy makeup, glamour lighting, beauty filters, and studio photography.
-Use natural facial features, realistic proportions, and casual expression.
-Safe non-sexual profile photo, adult appearance only.
-The person should feel like someone you could realistically meet in daily life.
+Create a realistic smartphone portrait photo.
+
+Subject:
+Japanese ${targetGender}
+Age appearance: ${visualAge}
+Hair: ${app.hair || "natural hairstyle"}
+Fashion: ${app.fashion || "casual everyday clothes"}
+Vibe: ${app.vibe || "natural and friendly"}
+Body type: ${app.bodyType || "average body type"}
+Style: ${app.style || pickedStyle}
+
+Important rules:
+- The person must visually match the age range.
+- The person must match the hairstyle, fashion, and vibe above.
+- The person should look like someone you could realistically meet in daily life.
+- Use realistic skin texture and natural facial features.
+- Use indoor daylight or casual natural lighting.
+- Use a smartphone portrait style.
+- Avoid celebrity, idol, influencer, fashion model, anime, doll-like face, or overly perfect beauty.
+- Avoid heavy makeup, beauty filter, glamour lighting, studio photography, or fantasy style.
+- Safe non-sexual profile photo.
+- Adult appearance only.
 `;
 }
 
