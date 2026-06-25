@@ -84,8 +84,11 @@ Body type: ${app.bodyType || "average body type"}.
 Style: ${app.style || "ordinary everyday person"}.
 Create a natural smartphone portrait photo.
 Realistic skin texture, natural face, casual indoor daylight.
-Not celebrity, not idol, not fashion model, not overly attractive.
-No beauty filter, no glamour lighting.
+Appearance should match the age range naturally.
+Do not make the person look much older than the age range.
+Do not make the person look like a celebrity, idol, influencer, fashion model, or anime character.
+Avoid overly perfect beauty, heavy makeup, extreme glamour, and beauty filters.
+Make the person look like a realistic everyday person with normal facial features.
 Safe non-sexual profile photo, adult appearance only.
 `;
     console.log("IMAGE_PROMPT:", imagePrompt);
