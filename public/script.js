@@ -1,45 +1,31 @@
 function diagnose(){
+  const result = document.getElementById("result");
+  result.style.display = "block";
 
-document.getElementById('result').style.display='block';
+  const ageList = ["20〜22歳", "23〜25歳", "26〜28歳", "29〜31歳", "32歳前後"];
+  const mbtiList = ["ENFP", "INFP", "INFJ", "ISFJ", "ESFP", "INTJ"];
+  const personalityList = [
+    "穏やかで思いやりがある人",
+    "明るく前向きで会話を楽しめる人",
+    "落ち着いていて聞き上手な人",
+    "誠実で一途に向き合ってくれる人",
+    "感性が豊かで優しい雰囲気の人"
+  ];
 
-const ages=[
-'20歳',
-'22歳',
-'24歳',
-'26歳',
-'28歳'
-];
+  const adviceList = [
+    "無理に背伸びせず、自然体で接することで良いご縁につながります。",
+    "相手の話をよく聞き、安心感を与えることが恋愛運を高めます。",
+    "焦らず少しずつ距離を縮めることで、信頼関係が深まりやすくなります。",
+    "共通の趣味や価値観を大切にすると、長く続く関係になりやすいです。",
+    "第一印象よりも、会話の心地よさを大切にすると良い相手を見つけやすくなります。"
+  ];
 
-const mbtis=[
-'ENFP',
-'INFJ',
-'ISFP',
-'ENTP',
-'INTJ'
-];
+  const pick = arr => arr[Math.floor(Math.random() * arr.length)];
 
-const personalities=[
-'明るく社交的',
-'優しく思いやりがある',
-'知的で落ち着いている',
-'行動力がある',
-'誠実で一途'
-];
+  document.getElementById("resultAge").innerText = pick(ageList);
+  document.getElementById("resultMbti").innerText = pick(mbtiList);
+  document.getElementById("resultPersonality").innerText = pick(personalityList);
+  document.getElementById("resultAdvice").innerText = pick(adviceList);
 
-const age=ages[Math.floor(Math.random()*ages.length)];
-const mbti=mbtis[Math.floor(Math.random()*mbtis.length)];
-const personality=personalities[Math.floor(Math.random()*personalities.length)];
-
-document.getElementById('resultAge').innerText=
-'おすすめ年齢：'+age;
-
-document.getElementById('resultMbti').innerText=
-'おすすめMBTI：'+mbti;
-
-document.getElementById('resultPersonality').innerText=
-'性格：'+personality;
-
-document.getElementById('resultAdvice').innerText=
-'恋愛は焦らず自然体で進めると良い結果につながります。';
-
+  result.scrollIntoView({ behavior: "smooth" });
 }
