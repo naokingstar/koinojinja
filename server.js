@@ -5,22 +5,28 @@ const path = require("path");
 const OpenAI = require("openai");
 
 const app = express();
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
-});
+const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 app.use(express.json({ limit: "10mb" }));
 app.use(express.static(path.join(__dirname, "public")));
 
+function cleanJson(text){
+  return text.replace(/```json/g, "").replace(/```/g, "").trim();
+}
+
 app.post("/api/diagnose", async (req, res) => {
   try {
     const { nickname, age, gender, mbti, type } = req.body;
+    const userAge = Number(age || 20);
 
     const targetGender = gender === "男性" ? "woman" : gender === "女性" ? "man" : "person";
 
-    const prompt = `
-日本語で恋愛診断結果を作ってください。
-対象者:
+    const resultPrompt = `
+あなたは健全なAI恋愛診断サービスです。
+性的表現は禁止。18歳未満に見える人物画像の指定は禁止。
+入力年齢が18未満でも、画像は必ず18歳以上の成人として扱ってください。
+
+ユーザー情報:
 ニックネーム: ${nickname || "未入力"}
 年齢: ${age || "未入力"}
 性別: ${gender || "未入力"}
@@ -28,55 +34,50 @@ MBTI: ${mbti || "未入力"}
 理想のタイプ: ${type || "未入力"}
 
 必ずJSONだけで返してください。
+
 {
- "recommendedAge": "24〜27歳",
+ "recommendedAge": "18〜22歳",
  "recommendedMbti": "ENFP",
  "personality": "自然体で話しやすい人",
- "place": "カフェ、学校、職場、友人の紹介",
+ "loveType": "穏やかで安心できる恋愛",
+ "job": "接客業・事務職・クリエイター",
+ "place": "カフェ・学校・職場・友人の紹介",
  "datePlan": "落ち着いたカフェで会話を楽しむ",
- "loveScore": "82%",
+ "confessionScore": "78%",
  "marriageScore": "★★★★☆",
- "advice": "恋愛アドバイスを120文字以内で"
+ "advice": "120文字以内の恋愛アドバイス",
+ "appearance": {
+   "ageRange": "18〜22歳",
+   "hair": "short bob",
+   "fashion": "casual",
+   "vibe": "natural and friendly",
+   "bodyType": "average",
+   "style": "ordinary everyday person"
+ }
 }
 `;
 
     const textResult = await client.chat.completions.create({
       model: "gpt-4o-mini",
-      messages: [{ role: "user", content: prompt }],
+      messages: [{ role: "user", content: resultPrompt }],
       temperature: 0.9
     });
 
-    const raw = textResult.choices[0].message.content;
-    const jsonText = raw.replace(/```json|```/g, "").trim();
-    const diagnosis = JSON.parse(jsonText);
+    const diagnosis = JSON.parse(cleanJson(textResult.choices[0].message.content));
 
-    const imagePatterns = targetGender === "woman" ? [
-  "ordinary Japanese woman, everyday person, natural face, average appearance, casual clothes, light makeup, realistic skin texture, smartphone portrait",
-  "Japanese woman with short hair, natural everyday style, casual clothes, realistic face, not model-like, indoor daylight",
-  "Japanese woman with bob hair, simple natural look, ordinary person, realistic smartphone portrait",
-  "Japanese woman with long hair, everyday casual fashion, natural skin texture, no beauty filter, realistic candid photo",
-  "Japanese woman with gyaru-inspired casual fashion, natural realistic face, not idol-like, smartphone portrait",
-  "Japanese woman with calm modest style, ordinary appearance, realistic face, casual indoor photo",
-  "Japanese woman, slightly fuller face, natural everyday person, realistic skin texture, casual clothes",
-  "Japanese woman with unique personal style, ordinary realistic face, casual clothes, natural daylight"
-] : [
-  "ordinary Japanese man, everyday person, average appearance, casual clothes, realistic skin texture, smartphone portrait",
-  "Japanese man with short hair, natural everyday style, realistic face, not model-like, indoor daylight",
-  "Japanese man with gentle feminine features, ordinary realistic face, casual clothes, smartphone portrait",
-  "Japanese man with glasses, calm everyday appearance, realistic skin texture, casual indoor photo",
-  "Japanese man, slightly fuller face, ordinary person, realistic candid profile photo",
-  "Japanese man with sporty casual look, natural realistic face, smartphone portrait",
-  "Japanese man with quiet modest style, ordinary appearance, realistic face, indoor daylight",
-  "Japanese man with unique facial features, everyday person, natural skin texture, casual clothes"
-];
+    const app = diagnosis.appearance || {};
+    const safeAgeRange = userAge < 18 ? "18 to 22 years old adult" : (app.ageRange || diagnosis.recommendedAge || "young adult");
 
-const selectedImagePattern = imagePatterns[Math.floor(Math.random() * imagePatterns.length)];
-
-const imagePrompt = `
-${selectedImagePattern}.
-High realism, realistic Japanese everyday person, no beauty filter, no glamour lighting,
-not celebrity, not idol, not fashion model, not overly attractive, natural hairstyle,
-casual indoor daylight, smartphone portrait style, realistic candid profile photo.
+    const imagePrompt = `
+Realistic Japanese ${targetGender}, ${safeAgeRange},
+${app.hair || "natural hairstyle"},
+${app.fashion || "casual clothes"},
+${app.vibe || "ordinary everyday atmosphere"},
+${app.bodyType || "average body type"},
+natural face, realistic skin texture, smartphone portrait,
+ordinary everyday person, not celebrity, not idol, not fashion model,
+not overly attractive, no beauty filter, indoor daylight,
+safe non-sexual profile photo, adult appearance only.
 `;
 
     const image = await client.images.generate({
@@ -85,23 +86,16 @@ casual indoor daylight, smartphone portrait style, realistic candid profile phot
       size: "1024x1024"
     });
 
-    const imageBase64 = image.data[0].b64_json;
-
     res.json({
       ...diagnosis,
-      image: `data:image/png;base64,${imageBase64}`
+      image: "data:image/png;base64," + image.data[0].b64_json
     });
 
   } catch (e) {
     console.error(e);
-    res.status(500).json({
-      error: "AI診断に失敗しました。時間をおいて再度お試しください。"
-    });
+    res.status(500).json({ error: "AI診断に失敗しました。時間をおいて再度お試しください。" });
   }
 });
 
 const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
