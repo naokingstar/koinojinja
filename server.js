@@ -50,11 +50,33 @@ MBTI: ${mbti || "未入力"}
     const jsonText = raw.replace(/```json|```/g, "").trim();
     const diagnosis = JSON.parse(jsonText);
 
-    const imagePrompt = `
-Realistic everyday Japanese ${targetGender}, average appearance, natural face, realistic skin texture,
-smartphone portrait style, casual clothes, indoor daylight, no beauty filter,
-not model-like, not idol-like, ordinary person, natural hairstyle,
-high realism, realistic candid profile photo.
+    const imagePatterns = targetGender === "woman" ? [
+  "ordinary Japanese woman, everyday person, natural face, average appearance, casual clothes, light makeup, realistic skin texture, smartphone portrait",
+  "Japanese woman with short hair, natural everyday style, casual clothes, realistic face, not model-like, indoor daylight",
+  "Japanese woman with bob hair, simple natural look, ordinary person, realistic smartphone portrait",
+  "Japanese woman with long hair, everyday casual fashion, natural skin texture, no beauty filter, realistic candid photo",
+  "Japanese woman with gyaru-inspired casual fashion, natural realistic face, not idol-like, smartphone portrait",
+  "Japanese woman with calm modest style, ordinary appearance, realistic face, casual indoor photo",
+  "Japanese woman, slightly fuller face, natural everyday person, realistic skin texture, casual clothes",
+  "Japanese woman with unique personal style, ordinary realistic face, casual clothes, natural daylight"
+] : [
+  "ordinary Japanese man, everyday person, average appearance, casual clothes, realistic skin texture, smartphone portrait",
+  "Japanese man with short hair, natural everyday style, realistic face, not model-like, indoor daylight",
+  "Japanese man with gentle feminine features, ordinary realistic face, casual clothes, smartphone portrait",
+  "Japanese man with glasses, calm everyday appearance, realistic skin texture, casual indoor photo",
+  "Japanese man, slightly fuller face, ordinary person, realistic candid profile photo",
+  "Japanese man with sporty casual look, natural realistic face, smartphone portrait",
+  "Japanese man with quiet modest style, ordinary appearance, realistic face, indoor daylight",
+  "Japanese man with unique facial features, everyday person, natural skin texture, casual clothes"
+];
+
+const selectedImagePattern = imagePatterns[Math.floor(Math.random() * imagePatterns.length)];
+
+const imagePrompt = `
+${selectedImagePattern}.
+High realism, realistic Japanese everyday person, no beauty filter, no glamour lighting,
+not celebrity, not idol, not fashion model, not overly attractive, natural hairstyle,
+casual indoor daylight, smartphone portrait style, realistic candid profile photo.
 `;
 
     const image = await client.images.generate({
