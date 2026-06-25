@@ -218,3 +218,52 @@ footer a{
     grid-template-columns:1fr;
   }
 }
+
+
+.image-card{
+  margin-top:25px;
+  background:#fff8fb;
+  padding:25px;
+  border-radius:18px;
+  text-align:center;
+}
+
+.ai-image{
+  width:220px;
+  height:220px;
+  margin:20px auto;
+  border-radius:50%;
+  background:linear-gradient(135deg,#ffd1dc,#ff8fb3,#fff0f5);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  box-shadow:0 12px 30px rgba(216,27,96,.22);
+}
+
+.face{
+  width:95px;
+  height:95px;
+  border-radius:50%;
+  background:rgba(255,255,255,.75);
+  position:absolute;
+  top:45px;
+}
+
+.face::after{
+  content:"";
+  position:absolute;
+  width:145px;
+  height:70px;
+  border-radius:70px 70px 35px 35px;
+  background:rgba(255,255,255,.7);
+  left:-25px;
+  top:90px;
+}
+
+.image-text{
+  position:absolute;
+  bottom:28px;
+  color:#c2185b;
+  font-weight:bold;
+}
