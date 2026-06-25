@@ -4,6 +4,8 @@ async function diagnose(){
 
   button.disabled = true;
   button.innerText = "AIが診断中...";
+  const aiImage = document.getElementById("aiImage");
+  if(aiImage){ aiImage.innerHTML = '<div class="image-loading">画像を生成中...</div>'; }
   result.style.display = "block";
 
   const setText = (id, value) => {
@@ -44,9 +46,10 @@ async function diagnose(){
     setText("resultDate", data.datePlan);
     setText("resultAdvice", data.advice);
 
-    const aiImage = document.getElementById("aiImage");
     if(aiImage && data.image){
       aiImage.innerHTML = '<img src="' + data.image + '" alt="AIが生成したお相手のイメージ">';
+    } else if(aiImage){
+      aiImage.innerHTML = '<div class="image-loading">画像生成に失敗しました。診断結果のみ表示しています。</div>';
     }
 
     result.scrollIntoView({ behavior: "smooth" });

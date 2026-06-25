@@ -445,3 +445,11 @@ footer a{
     border-radius:22px;
   }
 }
+
+
+.image-loading{
+  color:#d81b60;
+  font-weight:bold;
+  text-align:center;
+  padding:30px;
+}
