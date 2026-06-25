@@ -19,6 +19,15 @@ app.post("/api/diagnose", async (req, res) => {
     const { nickname, age, gender, mbti, type } = req.body;
     const userAge = Number(age || 20);
 
+function getVisualAgeRange(userAge){
+  if (userAge < 18) return "18 to 22 years old adult, youthful university student style";
+  if (userAge <= 22) return "18 to 22 years old adult, youthful university student style";
+  if (userAge <= 29) return "23 to 29 years old adult, young working adult style";
+  if (userAge <= 39) return "30s adult, mature working adult style";
+  if (userAge <= 49) return "40s adult, calm mature style";
+  return "adult, age-appropriate mature style";
+}
+
     const targetGender = gender === "男性" ? "woman" : gender === "女性" ? "man" : "person";
 
     const resultPrompt = `
@@ -71,16 +80,14 @@ MBTI: ${mbti || "未入力"}
 
     const app = diagnosis.appearance || {};
 
-    let visualAge = "young adult, 20s";
-    if (userAge >= 18 && userAge <= 22) visualAge = "18 to 22 years old adult, university student or new worker style";
-    if (userAge >= 23 && userAge <= 29) visualAge = "mid to late 20s, young working adult";
-    if (userAge >= 30 && userAge <= 39) visualAge = "30s, mature adult";
-    if (userAge >= 40) visualAge = "40s adult, calm mature appearance";
-    if (userAge < 18) visualAge = "18 to 22 years old adult, young adult appearance";
+    let visualAge = getVisualAgeRange(userAge);
+    
 
     const imagePrompt = `
 Realistic Japanese ${targetGender}.
 Age appearance: ${visualAge}.
+The face must visually match this age range.
+Do not generate a person who looks significantly older or younger than this age range.
 Hair: ${app.hair || "natural hairstyle"}.
 Fashion: ${app.fashion || "casual everyday clothes"}.
 Vibe: ${app.vibe || "ordinary, natural, friendly"}.
