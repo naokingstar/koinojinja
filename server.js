@@ -12,6 +12,17 @@ const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 app.use(express.json({ limit: "10mb" }));
 app.use(express.static(path.join(__dirname, "public")));
 
+app.get("/sitemap.xml", (req, res) => {
+  res.type("application/xml");
+  res.sendFile(path.join(__dirname, "public", "sitemap.xml"));
+});
+
+app.get("/robots.txt", (req, res) => {
+  res.type("text/plain");
+  res.sendFile(path.join(__dirname, "public", "robots.txt"));
+});
+
+
 function cleanJson(text){
   return text.replace(/```json/g, "").replace(/```/g, "").trim();
 }
